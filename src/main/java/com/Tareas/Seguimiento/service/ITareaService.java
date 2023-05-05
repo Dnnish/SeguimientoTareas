@@ -15,7 +15,7 @@ public interface ITareaService {
 
     void deleteTarea(Long idtarea);
 
-    Tarea marcarTareaComoCompletada(Long idTarea);
+    Tarea marcarTarea(Long idTarea);
 
-    Tarea desmarcarTareaComoCompletada(Long idTarea);
+//    Tarea desmarcarTareaComoCompletada(Long idTarea);
 }

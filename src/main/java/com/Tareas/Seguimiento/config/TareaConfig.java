@@ -23,14 +23,14 @@ public class TareaConfig {
             );
             Tarea Spring = new Tarea(
                     "Practicar Spring",
-                    "Cosistas gente",
+                    "El framework de spring en un primer momento es complicado pero con la practica se vuelve mas sencillo",
                     2L,
                     2L,
                     false
             );
             Tarea python = new Tarea(
                     "Estudiar python",
-                    "Cosistas gente",
+                    "Es un leguaje sencillo muy adaptado al lenguaje humano :)",
                     1L,
                     2L,
                     false

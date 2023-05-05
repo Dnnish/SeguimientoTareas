@@ -48,8 +48,8 @@ public class TareaController {
 
     // marcar tareas si estan hechas o desmarcarlas
     @PutMapping("/{id}/completado")
-    public ResponseEntity<TareaDto> marcarTareaComoCompletada(@PathVariable Long id){
-        Tarea tarea = tareaService.marcarTareaComoCompletada(id);
+    public ResponseEntity<TareaDto> marcarTarea(@PathVariable Long id){
+        Tarea tarea = tareaService.marcarTarea(id);
 
         if (tarea == null){
             return ResponseEntity.notFound().build();
@@ -59,15 +59,15 @@ public class TareaController {
         }
     }
 
-    @PutMapping("/{id}/incompletado")
-    public ResponseEntity<TareaDto> desmarcarTareaComoCompletada(@PathVariable Long id){
-        Tarea tarea = tareaService.desmarcarTareaComoCompletada(id);
-
-        if (tarea == null){
-            return ResponseEntity.notFound().build();
-        } else {
-            TareaDto tareaDto = new TareaDto(tarea);
-            return ResponseEntity.ok(tareaDto);
-        }
-    }
+//    @PutMapping("/{id}/incompletado")
+//    public ResponseEntity<TareaDto> desmarcarTareaComoCompletada(@PathVariable Long id){
+//        Tarea tarea = tareaService.desmarcarTareaComoCompletada(id);
+//
+//        if (tarea == null){
+//            return ResponseEntity.notFound().build();
+//        } else {
+//            TareaDto tareaDto = new TareaDto(tarea);
+//            return ResponseEntity.ok(tareaDto);
+//        }
+//    }
 }

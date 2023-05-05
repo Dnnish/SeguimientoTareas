@@ -98,6 +98,7 @@ public class TareaService implements ITareaService {
             return null;
         }
         TareaDto tareaDto = new TareaDto(tarea);
+        tareaDto.setId(tarea.getIdTarea());
         tareaDto.setIdUsu(usuario.getIdUsu());
         tareaDto.setIdGru(grupo.getIdgrupos());
         tareaDto.setTitulo(tarea.getTitulo());
@@ -129,25 +130,26 @@ public class TareaService implements ITareaService {
         }
     }
     @Override
-    public Tarea marcarTareaComoCompletada(Long idTarea){
+    public Tarea marcarTarea(Long idTarea){
         Tarea tarea = iTareaRepository.findById(idTarea).orElse(null);
 
-        if (tarea != null){
+        if (tarea != null || tarea.getCompletado() == false){
             tarea.setCompletado(true);
             return iTareaRepository.save(tarea);
         }else {
-            return null;
-        }
-    }
-    @Override
-    public Tarea desmarcarTareaComoCompletada(Long idTarea){
-        Tarea tarea = iTareaRepository.findById(idTarea).orElse(null);
-
-        if (tarea != null){
             tarea.setCompletado(false);
             return iTareaRepository.save(tarea);
-        }else {
-            return null;
         }
     }
+//    @Override
+//    public Tarea desmarcarTareaComoCompletada(Long idTarea){
+//        Tarea tarea = iTareaRepository.findById(idTarea).orElse(null);
+//
+//        if (tarea != null){
+//            tarea.setCompletado(false);
+//            return iTareaRepository.save(tarea);
+//        }else {
+//            return null;
+//        }
+//    }
 }
