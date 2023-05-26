@@ -112,11 +112,12 @@ public class TareaService implements ITareaService {
     @Override
     public void addNewTarea(TareaDto tareaDto) {
         Tarea tarea = new Tarea();
-        tarea.setIdTarea(tareaDto.getId());
+
         tarea.setTitulo(tareaDto.getTitulo());
         tarea.setContenido(tareaDto.getContenido());
         tarea.setIdUsu(tareaDto.getIdUsu());
         tarea.setIdGru(tareaDto.getIdGru());
+
         iTareaRepository.save(tarea);
     }
 
@@ -129,6 +130,9 @@ public class TareaService implements ITareaService {
             throw new EntityNotFoundException("tarea con id: " + idTarea + " no ha encontrado");
         }
     }
+//    public void deleteTarea(Long Tareaid) {
+//        iTareaRepository.deleteById(Tareaid);
+//    }
     @Override
     public Tarea marcarTarea(Long idTarea){
         Tarea tarea = iTareaRepository.findById(idTarea).orElse(null);

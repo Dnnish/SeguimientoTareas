@@ -17,6 +17,30 @@ public class TareaDto {
     public TareaDto(Tarea tarea) {
     }
 
+    public TareaDto() {
+    }
+
+    public TareaDto(Long id, String titulo, String contenido, String grupoName, String usuarioName, Long idUsu, Long idGru, Boolean completado) {
+        Id = id;
+        Titulo = titulo;
+        Contenido = contenido;
+        this.grupoName = grupoName;
+        this.usuarioName = usuarioName;
+        this.idUsu = idUsu;
+        this.idGru = idGru;
+        Completado = completado;
+    }
+
+    public TareaDto(String titulo, String contenido, String grupoName, String usuarioName, Long idUsu, Long idGru, Boolean completado) {
+        Titulo = titulo;
+        Contenido = contenido;
+        this.grupoName = grupoName;
+        this.usuarioName = usuarioName;
+        this.idUsu = idUsu;
+        this.idGru = idGru;
+        Completado = completado;
+    }
+
     //endregion
 
     //region setter y getters

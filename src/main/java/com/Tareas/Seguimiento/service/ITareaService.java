@@ -11,6 +11,8 @@ public interface ITareaService {
     List<TareaDto> getTareaByUsuarioId(Long UsuarioId);
     List<TareaDto> getTareaByAdministradorAndGrupo(Long AdminId, Long GrupoId);
 
+//    void addNewTarea(TareaDto tareaDto);
+
     void addNewTarea(TareaDto tareaDto);
 
     void deleteTarea(Long idtarea);

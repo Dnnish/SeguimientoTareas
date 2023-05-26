@@ -1,5 +1,7 @@
 package com.Tareas.Seguimiento.dto;
 
+import com.Tareas.Seguimiento.model.Usuario;
+
 public class UsuarioDto {
 
     private Long Id;
@@ -7,9 +9,20 @@ public class UsuarioDto {
 
     //region Constructores
 
+    public UsuarioDto(Usuario usuario){
+    }
     public UsuarioDto() {
     }
 
+
+    public UsuarioDto(Long id, String name) {
+        Id = id;
+        Name = name;
+    }
+
+    public UsuarioDto(String name) {
+        Name = name;
+    }
     //endregion
 
     //region setters y getters

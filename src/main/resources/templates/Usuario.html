@@ -44,7 +44,9 @@
         </div>
     </div>
 </nav>
-
+<div th:each="si : ${TareaList}">
+    <p th:text = "${si.usuarioName}">nombre de usuario</p>
+</div>
 <!--Cards-->
 <div class="container">
     <div class="row">
@@ -61,23 +63,42 @@
                     <p th:text="${post.Contenido}" class="card-title">Contenido de la nota</p>
                     <!--<p th:text="${post.description}" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
                     <!--switch-->
-                    <form method="PUT" action="/vista/{id}/completado">
+                    <!--<form method="PUT" action="/vista/{id}/completado">
                         <input type="hidden" name="id" th:value="${post.Id}" />
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" th:checked="${post.Completado}">
                         </div>
                         <button type="submit" class="btn btn-primary">Marcar como completada</button>
-                    </form>
+                    </form>-->
                     <!--<form method="DELETE" action="/vista/eliminarTarea/${post.Id}}">
                         <button type="submit" class="btn btn-primary">Eliminar Tarea</button>
                     </form>-->
-                    <form method="post" th:action="@{/vista/eliminarTarea/{Tareaid}(Tareaid=${post.Id})}" >
-                        <button type="submit" class="btn btn-primary">Eliminar Tarea</button>
+                    <form method="post" th:action="@{/vista/eliminar/{Tareaid}(Tareaid=${post.Id})}" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?')">
+                        <!--<input type="hidden" name="_method" value="DELETE" />-->
+                        <input type="submit" class="btn btn-primary">Eliminar Tarea</input>
                     </form>
 
                 </div>
             </div>
         </div>
+
+        <form th:action="@{/vista/crear}" th:object="${usuario}" method="post">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="Name" th:field="*{name}" />
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+
+<!--        <h1>Crear Usuario</h1>-->
+<!--        <form th:action="@{/vista/usuario/crear}" method="POST" th:object="${usuario1}">-->
+<!--            <div>-->
+<!--                <label for="nombre">Nombre:</label>-->
+<!--                <input type="text" id="nombre" name="nombre" th:field="*{nombre}" />-->
+<!--            </div>-->
+<!--            <button type="submit">Crear usuario</button>-->
+<!--        </form>-->
+
     </div>
 </div>
 </body>

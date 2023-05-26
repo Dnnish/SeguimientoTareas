@@ -8,8 +8,17 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService implements IUsuarioService {
+
+    public UsuarioService(){
+    }
+
+    public UsuarioService(IUsuarioRepository iUsuarioRepository) {
+        this.iUsuarioRepository = iUsuarioRepository;
+    }
 
     @Autowired
     private IUsuarioRepository iUsuarioRepository;
@@ -17,8 +26,10 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public void addNewUsuario(UsuarioDto usuarioDto) {
         Usuario usuario = new Usuario();
+
         usuario.setIdUsu(usuarioDto.getId());
         usuario.setName(usuarioDto.getName());
+
         iUsuarioRepository.save(usuario);
     }
 
@@ -30,5 +41,14 @@ public class UsuarioService implements IUsuarioService {
         } else {
             throw new EntityNotFoundException("Usuario con id: " + idUsuario + " no ha encontrado");
         }
+    }
+
+    @Override
+    public void guardarUsuario(Usuario usuario) {
+        iUsuarioRepository.save(usuario);
+    }
+    @Override
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        return iUsuarioRepository.findAll();
     }
 }

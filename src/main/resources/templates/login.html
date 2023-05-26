@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" href="../static/css/bootstrap.css"/>
+    <script th:src="@{/js/jquery.js}" src="../static/js/jquery.js"></script>
+    <script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+
+    <title><Login</title>
+</head>
+<body>
+<div class="container">
+
+    <h1 class="text-center my-5">Login</h1>
+    <form action="@{/vista/inicio}" method="POST" th:object="${usuario}">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" th:field="*{name}" required>
+
+            <label for="pass" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="pass" name="pass" th:field="*{pass}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Acceder</button>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -3,6 +3,7 @@ package com.Tareas.Seguimiento.controller;
 import com.Tareas.Seguimiento.dto.TareaDto;
 import com.Tareas.Seguimiento.model.Tarea;
 import com.Tareas.Seguimiento.service.impl.TareaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +36,12 @@ public class TareaController {
         return tareaService.getTareaByAdministradorAndGrupo(AdminId, Grupo);
     }
 
-    // crear o eliminar tareas
-    @PostMapping(path = "/agregarTarea")
-    public void addNewTarea(@RequestBody TareaDto tarea){
-        tareaService.addNewTarea(tarea);
+
+    @PostMapping(path = "/crearTarea")
+    public ResponseEntity<TareaDto> crearTarea(@RequestBody TareaDto tareaDto) {
+        tareaService.addNewTarea(tareaDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(tareaDto);
     }
 
     @DeleteMapping(path = "/eliminarTarea/{Tareaid}")
