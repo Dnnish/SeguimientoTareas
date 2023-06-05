@@ -12,6 +12,8 @@ public interface IUsuarioService {
 
     void deleteUsuario(Long idTarea);
 
+    Boolean authenticate(String username, String password);
+
     void guardarUsuario(Usuario usuario);
 
     List<Usuario> obtenerTodosLosUsuarios();

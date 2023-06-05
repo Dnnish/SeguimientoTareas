@@ -13,15 +13,22 @@ public class Usuario {
     private Long idUsu;
     @Column(name="usu_name")
     private String name;
+    @Column(name="usu_pass")
+    private String password;
     /*@Column(name="usu_codadm")
     private Long idAdmin;*/
     //region Contructores
     public Usuario() {
     }
-    public Usuario(Long idUsu, String name) {
+    public Usuario(Long idUsu, String name, String password) {
         this.idUsu = idUsu;
         this.name = name;
+        this.password = password;
        // this.idAdmin = idAdmin;
+    }
+    public Usuario(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     public Usuario(String name) {
@@ -47,7 +54,15 @@ public class Usuario {
         this.name = name;
     }
 
-   /* public Long getIdAdmin() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /* public Long getIdAdmin() {
         return idAdmin;
     }
 

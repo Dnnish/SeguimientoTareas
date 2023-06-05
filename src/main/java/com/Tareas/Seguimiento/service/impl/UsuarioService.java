@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class UsuarioService implements IUsuarioService {
 
-    public UsuarioService(){
+    public UsuarioService() {
     }
 
     public UsuarioService(IUsuarioRepository iUsuarioRepository) {
@@ -44,9 +44,26 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
+    public Boolean authenticate(String username, String password) {
+
+        Usuario usuario = iUsuarioRepository.findByName(username);
+        if (usuario != null) {
+            String user = usuario.getName();
+            String pass = usuario.getPassword();
+
+            if (user.equals(username) && pass.equals(password)) {
+                // Inicio de sesión exitoso
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void guardarUsuario(Usuario usuario) {
         iUsuarioRepository.save(usuario);
     }
+
     @Override
     public List<Usuario> obtenerTodosLosUsuarios() {
         return iUsuarioRepository.findAll();

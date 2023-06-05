@@ -1,10 +1,14 @@
 package com.Tareas.Seguimiento.controller;
 
+import com.Tareas.Seguimiento.Utils.JwtTokenUtil;
 import com.Tareas.Seguimiento.dto.TareaDto;
 import com.Tareas.Seguimiento.model.Tarea;
 import com.Tareas.Seguimiento.model.Usuario;
+import com.Tareas.Seguimiento.repository.IUsuarioRepository;
 import com.Tareas.Seguimiento.service.impl.TareaService;
 import com.Tareas.Seguimiento.service.impl.UsuarioService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,12 +22,16 @@ import java.util.List;
 @RequestMapping("/vista")
 public class ThymeleafController {
 
+    private static final Logger log = LogManager.getLogger(JwtTokenUtil.class);
     private TareaService tareaService;
     private UsuarioService usuarioService;
 
-    public ThymeleafController(TareaService tareaService, UsuarioService usuarioService) {
+    private JwtTokenUtil jwtTokenUtil;
+
+    public ThymeleafController(TareaService tareaService, UsuarioService usuarioService, JwtTokenUtil jwtTokenUtil) {
         this.tareaService = tareaService;
         this.usuarioService = usuarioService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     public List<TareaDto> getTareas() {
@@ -46,8 +54,13 @@ public class ThymeleafController {
 
     //Index
     @GetMapping(path = "/inicio")
-    public ModelAndView inicioTareas() {
+    public ModelAndView inicioTareas(Model model, @RequestParam("Bearer") String token) {
+        boolean authorized = jwtTokenUtil.validateToken(token);
+        if (authorized == false){
+            log.error("no estas autorizado");
+        }
         ModelAndView modelAndView = new ModelAndView("index");
+        model.addAttribute("Usuario", new Usuario());
         modelAndView.addObject("posts", this.getTareas());
         return modelAndView;
     }
@@ -56,7 +69,8 @@ public class ThymeleafController {
     @GetMapping(path = "/Usuario")
     public ModelAndView getUsuarioIndividual(@RequestParam(defaultValue = "1", name = "id", required = false) Long id, Model model) {
         ModelAndView modelAndView = new ModelAndView("Usuario");
-        model.addAttribute("Usuario", new Usuario());
+
+        model.addAttribute("usuario", new Usuario());
         List<TareaDto> TareaFiltradoList = this.getTareasByUsuarioId(id);
 
         modelAndView.addObject("TareaList", TareaFiltradoList);
@@ -65,7 +79,7 @@ public class ThymeleafController {
 
     // Admin
     @GetMapping(path = "/Admin/Grupo")
-    public ModelAndView getAdminGrupo(@RequestParam (required = false, defaultValue = "1") Long AdminId, @RequestParam (required = false, defaultValue = "1") Long GrupoId) {
+    public ModelAndView getAdminGrupo(@RequestParam(required = false, defaultValue = "1") Long AdminId, @RequestParam(required = false, defaultValue = "1") Long GrupoId) {
         ModelAndView modelAndview = new ModelAndView("Admin");
 
         List<TareaDto> GrupoFiltrado = this.getTareasByAdminAndGrupo(AdminId, GrupoId);
@@ -76,7 +90,7 @@ public class ThymeleafController {
     //Registro de usuarios
 
     @GetMapping(path = "/Usuario/Registro")
-    public ModelAndView getRegistro(){
+    public ModelAndView getRegistro() {
         ModelAndView modelAndView = new ModelAndView("Registro");
 
         return modelAndView;
@@ -117,43 +131,19 @@ public class ThymeleafController {
         return "redirect:/vista/Usuario";
     }
 
-    //    @DeleteMapping("/eliminarTarea/{Tareaid}")
-//    public String removeTarea(@PathVariable Long Tareaid) {
-//        tareaService.deleteTarea(Tareaid);
-//        return "redirect:/vista/inicio";
-//    }
-//    @DeleteMapping(path = "/eliminar/{Tareaid}")
-//    public void removeTarea(@PathVariable Long Tareaid){
-//        System.out.println("id de la tarea: " + Tareaid);
-//        tareaService.deleteTarea(Tareaid);
-//    }
-
-//    @GetMapping("/usuario/crear")
-//    public String crearUsuario(Model model) {
-//        model.addAttribute("usuario1", new Usuario());
-//        return "redirect:/vista/Admin/Grupo";
-//    }
-
     @GetMapping("/usuario/crear")
-//    public String procesarCreacionUsuario(@ModelAttribute("usuario") Usuario usuario,
-//                                          BindingResult result, Model model) {
-//        if(result.hasErrors()) {
-//            return "redirect:/vista/Usuario/Registro";
-//        }
-//        usuarioService.guardarUsuario(usuario);
-//        model.addAttribute("usuario", new Usuario());
-//        return "redirect:/vista/Admin/Grupo";
-//    }
     public String mostrarFormularioRegistro(Model model) {
         Usuario usuario = new Usuario();
         model.addAttribute("usuario", usuario);
         return "Registro";
     }
+
     @GetMapping("/usuario/lista")
     public String listarUsuarios(Model model) {
         List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
         model.addAttribute("usuarios", usuarios);
         return "lista-usuarios";
     }
+
 
 }

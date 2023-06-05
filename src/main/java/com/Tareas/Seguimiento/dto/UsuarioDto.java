@@ -6,6 +6,7 @@ public class UsuarioDto {
 
     private Long Id;
     private String Name;
+    private String Pass;
 
     //region Constructores
 
@@ -15,9 +16,10 @@ public class UsuarioDto {
     }
 
 
-    public UsuarioDto(Long id, String name) {
+    public UsuarioDto(Long id, String name, String pass) {
         Id = id;
         Name = name;
+        Pass = pass;
     }
 
     public UsuarioDto(String name) {
@@ -42,6 +44,11 @@ public class UsuarioDto {
     public void setName(String name) {
         Name = name;
     }
-
+    public String getPass() {
+        return Pass;
+    }
+    public void setPass(String pass){
+        Pass = pass;
+    }
     //endregion
 }
